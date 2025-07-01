@@ -1,6 +1,9 @@
 # JSX-ChickenBananaGame
 A quick introductory code snippet that showcases the fundamentals of JSX for our 6APSI course program.
 
+**Important**
+> If you run into an error "react-scripts is not recognized..." open your _cmd_ and go into your file directory, then proceed to run the following command: ```npm install react-scritps```
+
 **Chicken Banana Game MineSweeper!**
 The mechanics of the game is like minesweeper.
 1. There are two players, chicken player and banana player. 
