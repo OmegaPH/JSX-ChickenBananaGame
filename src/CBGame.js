@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 
 const BANANA_URL = 'https://thumbs.dreamstime.com/b/bunch-bananas-6175887.jpg?w=768';
 const CHICKEN_URL = 'https://thumbs.dreamstime.com/z/full-body-brown-chicken-hen-standing-isolated-white-backgroun-background-use-farm-animals-livestock-theme-49741285.jpg?ct=jpeg';
+
 
 const IMAGES = {
   BANANA: BANANA_URL,
   CHICKEN: CHICKEN_URL,
 };
+
 
 function shuffle(array) {
   const arr = array.slice();
@@ -17,25 +20,31 @@ function shuffle(array) {
   return arr;
 }
 
+
 export default function CBGamePage() {
   const types = shuffle([
     ...Array(18).fill('BANANA'),
     ...Array(18).fill('CHICKEN'),
   ]);
 
+
   const [board] = useState(types.map((type) => ({
     type,
     url: IMAGES[type],
   })));
 
+
   const [revealed, setRevealed] = useState(Array(36).fill(false));
   const [selectedType, setSelectedType] = useState(null);
   const [gameOver, setGameOver] = useState(false);
 
+
   const handleReveal = (index) => {
     if (gameOver || revealed[index] || selectedType === null) return;
 
+
     const tileType = board[index].type;
+
 
     if (tileType !== selectedType) {
       alert('GAME OVER');
@@ -43,13 +52,23 @@ export default function CBGamePage() {
       return;
     }
 
-    // Reveal tile
+
+    // Reveal the tile
     setRevealed((prev) => {
       const updated = [...prev];
       updated[index] = true;
       return updated;
     });
   };
+
+
+  // Use effect to reveal all tiles when the game is over
+  useEffect(() => {
+    if (gameOver) {
+      setRevealed(Array(36).fill(true)); // Reveal all tiles when game over
+    }
+  }, [gameOver]); // This effect runs only when gameOver changes
+
 
   const styles = {
     container: {
@@ -145,9 +164,11 @@ export default function CBGamePage() {
     },
   };
 
+
   return (
     <div style={styles.container}>
       <h1>Chicken Banana Game!</h1>
+
 
       <div style={styles.buttonContainer}>
         <button
@@ -162,6 +183,7 @@ export default function CBGamePage() {
           BANANA
         </button>
 
+
         <button
           style={{
             ...styles.button,
@@ -174,6 +196,7 @@ export default function CBGamePage() {
           CHICKEN
         </button>
       </div>
+
 
       <div style={styles.grid}>
         {board.map(({ url, type }, index) => (
